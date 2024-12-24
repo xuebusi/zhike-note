@@ -1,8 +1,12 @@
-<template>
 
+<script setup>
+import MainTopToolbar from './components/toolbar/MainTopToolbar.vue';
+</script>
+
+<template>
   <n-layout position="absolute">
     <n-layout-header bordered style="height: 64px;padding: 0 20px">
-      颐和园路
+      <main-top-toolbar />
     </n-layout-header>
     <n-layout position="absolute" style="top: 64px;" has-sider>
       <n-layout-sider bordered width="64px" content-style="padding: 24px 0; text-align: center">
@@ -13,8 +17,4 @@
       </n-layout-content>
     </n-layout>
   </n-layout>
-
 </template>
-
-<script setup>
-</script>
