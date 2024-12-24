@@ -13,8 +13,14 @@ const registerFormModel = ref({
 // 注册表单校验规则
 const registerFormRules = {
     email: [
-        { required: true, message: '请输入邮箱', trigger: ['input', 'blur'] },
         {
+            key: 'email',
+            required: true,
+            message: '请输入邮箱',
+            trigger: ['input', 'blur']
+        },
+        {
+            key: 'email',
             message: '邮箱格式不正确',
             trigger: ['input', 'blur'],
             validator: (rule, value) => {
@@ -43,6 +49,63 @@ const toRegister = (e) => {
         }
     });
 }
+
+// 获取邮箱验证码
+const getEmailVc = () => {
+    checkEmail();
+}
+
+// 校验邮箱
+const checkEmail = () => {
+    registerFormRef.value?.validate(
+        (errors) => {
+            if (!errors) {
+                startCountdown();
+            }
+        },
+        (rule) => {
+            return rule?.key === 'email'
+        }
+    )
+}
+
+// 倒计时对象
+const countdown = ref({
+    // 是否正在倒计时
+    isCountdown: false,
+    // 倒计时是否可用
+    isDisabled: false,
+    // 倒计时文字
+    text: "获取验证码",
+    // 倒计时秒数
+    seconds: 60,
+    // 定时器对象
+    timer: null
+});
+
+// 开始倒计时
+const startCountdown = () => {
+    countdown.value.isCountdown = true;
+    countdown.value.isDisabled = true;
+    countdown.value.timer = setInterval(() => {
+        countdown.value.seconds--;
+        countdown.value.text = `${countdown.value.seconds}秒后重新获取`;
+        if (countdown.value.seconds === 0) {
+            resetCountDown();
+        }
+    }, 1000);
+}
+
+// 重置倒计时
+function resetCountDown() {
+    // 清除定时器
+    clearInterval(countdown.value.timer);
+    countdown.value.seconds = 60;
+    countdown.value.isCountdown = false;
+    countdown.value.isDisabled = false;
+    countdown.value.text = "获取验证码";
+}
+
 </script>
 
 <template>
@@ -69,7 +132,9 @@ const toRegister = (e) => {
                     <n-input placeholder="请输入验证码" v-model:value="registerFormModel.vc" />
                 </n-form-item-gi>
                 <n-form-item-gi>
-                    <n-button block secondary type="success">获取验证码</n-button>
+                    <n-button block secondary type="success" :disabled="countdown.isDisabled" @click="getEmailVc">
+                        {{ countdown.text }}
+                    </n-button>
                 </n-form-item-gi>
             </n-grid>
 
