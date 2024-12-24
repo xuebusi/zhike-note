@@ -1,5 +1,11 @@
 <script setup>
 import { DarkModeRound, NotificationsNoneOutlined } from '@vicons/material'
+import { useThemeStore } from '@/stores/themeStore';
+import { storeToRefs } from 'pinia';
+
+const themeStore = useThemeStore();
+const { theme, isDarkTheme } = storeToRefs(themeStore);
+const { changeTheme } = themeStore;
 </script>
 
 <template>
@@ -25,8 +31,8 @@ import { DarkModeRound, NotificationsNoneOutlined } from '@vicons/material'
             </n-badge>
 
             <!-- 主题按钮 -->
-            <n-button tertiary circle>
-                <n-icon size="18" :component="DarkModeRound" />
+            <n-button tertiary circle @click="changeTheme()">
+                <n-icon size="18" :component="theme.icon" />
             </n-button>
 
             <!-- 登录按钮 -->
