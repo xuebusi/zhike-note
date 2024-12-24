@@ -1,10 +1,10 @@
 <script setup>
-import { DarkModeRound, NotificationsNoneOutlined } from '@vicons/material'
+import { NotificationsNoneOutlined } from '@vicons/material'
 import { useThemeStore } from '@/stores/themeStore';
 import { storeToRefs } from 'pinia';
 
 const themeStore = useThemeStore();
-const { theme, isDarkTheme } = storeToRefs(themeStore);
+const { theme } = storeToRefs(themeStore);
 const { changeTheme } = themeStore;
 </script>
 
