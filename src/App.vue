@@ -7,9 +7,6 @@
 </template>
 
 <script setup>
-// 按需引入naive-ui组件
-import { NButton, NIcon } from 'naive-ui'
 // 从图标库引入AcUnitRound图标
 import { AcUnitRound } from '@vicons/material'
-
 </script>
