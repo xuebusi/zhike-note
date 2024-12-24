@@ -10,6 +10,8 @@ const { changeTheme } = themeStore;
 
 // 显示登录弹窗
 const showLoginModel = ref(false);
+
+const loginModalStep = ref(2)
 </script>
 
 <template>
@@ -44,7 +46,8 @@ const showLoginModel = ref(false);
     <!-- 登录窗口 -->
     <n-modal v-model:show="showLoginModel" transform-origin="center" :close-on-esc="false" :mask-closable="false">
         <div style="width: 400px">
-            <login />
+            <login v-if="loginModalStep === 1" />
+            <register v-else-if="loginModalStep === 2" />
         </div>
     </n-modal>
 </template>
