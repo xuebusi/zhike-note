@@ -14,7 +14,8 @@ const { changeTheme } = themeStore;
 // 显示登录弹窗
 const showLoginModel = ref(false);
 
-const loginModalStep = ref(3)
+// 登录步骤:1登录，2注册，3注册成功
+const loginModalStep = ref(1)
 
 // 登录卡片显示计算属性
 const showLoginModelCard = computed(() => {
@@ -27,6 +28,11 @@ const showLoginModelCard = computed(() => {
             return RegisterSuccess;
     }
 })
+
+// 切换登录步骤
+const changeLoginModalStep = (step) => {
+    loginModalStep.value = step
+}
 </script>
 
 <template>
@@ -63,7 +69,9 @@ const showLoginModelCard = computed(() => {
         <div style="width: 400px">
             <!-- 使用Vue提供的Transition实现组件过渡动画，"out-in"表示先执行离开动画再执行进入动画 -->
             <Transition name="bounce" mode="out-in">
-                <component :is="showLoginModelCard" />
+                <!-- 根据 showLoginModelCard 的值动态选择要渲染的组件。
+                 监听子组件发出的 changeStep 事件，并调用父组件中的 changeLoginModalStep 方法。 -->
+                <component :is="showLoginModelCard" @changeStep="changeLoginModalStep" />
             </Transition>
         </div>
     </n-modal>

@@ -106,6 +106,8 @@ function resetCountDown() {
     countdown.value.text = "获取验证码";
 }
 
+// 自定义事件
+const emits = defineEmits(['changeStep']);
 </script>
 
 <template>
@@ -113,7 +115,8 @@ function resetCountDown() {
         <!-- 标题 -->
         <n-space align="center" justify="space-between">
             <h2>注册</h2>
-            <n-text depth="3">已有账号？<n-button text type="info">前往登录</n-button></n-text>
+            <!-- 点击按钮后，触发名为 changeStep 的自定义事件，并传递参数 1 给父组件 -->
+            <n-text depth="3">已有账号？<n-button text type="info" @click="emits('changeStep', 1)">前往登录</n-button></n-text>
         </n-space>
         <!-- 注册表单 -->
         <n-form ref="registerFormRef" :model="registerFormModel" :rules="registerFormRules">

@@ -44,6 +44,9 @@ const toLogin = (e) => {
         }
     });
 }
+
+// 自定义事件
+const emits = defineEmits(['changeStep'])
 </script>
 
 <template>
@@ -51,7 +54,8 @@ const toLogin = (e) => {
         <!-- 标题 -->
         <n-space align="center" justify="space-between">
             <h2>登录</h2>
-            <n-text depth="3">暂无账号？<n-button text type="info">前往注册</n-button></n-text>
+            <!-- 点击按钮后，触发名为 changeStep 的自定义事件，并传递参数 2 给父组件 -->
+            <n-text depth="3">暂无账号？<n-button text type="info" @click="emits('changeStep', 2)">前往注册</n-button></n-text>
         </n-space>
         <!-- 登录表单 -->
         <n-form ref="loginFormRef" :model="loginFormModel" :rules="loginFormRules">

@@ -1,5 +1,8 @@
 <script setup>
 import { CheckCircleRound } from '@vicons/material'
+
+// 自定义事件
+const emits = defineEmits(['changeStep']);
 </script>
 <template>
     <n-card style="text-align: center;">
@@ -9,7 +12,8 @@ import { CheckCircleRound } from '@vicons/material'
         </n-text>
         <n-text depth="3">
             请前往注册的邮箱，查看账号信息，
-            <n-button text type="info">点击此处前往登录</n-button>
+            <!-- 点击按钮后，触发名为 changeStep 的自定义事件，并传递参数 1 给父组件 -->
+            <n-button text type="info" @click="emits('changeStep', 1)">点击此处前往登录</n-button>
         </n-text>
     </n-card>
 </template>
