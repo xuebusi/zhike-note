@@ -1,8 +1,11 @@
 <script setup>
+import Login from '@/components/login/Login.vue'
+import Register from '@/components/login/Register.vue'
+import RegisterSuccess from '@/components/login/RegisterSuccess.vue'
 import { NotificationsNoneOutlined } from '@vicons/material'
 import { useThemeStore } from '@/stores/themeStore';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const themeStore = useThemeStore();
 const { theme } = storeToRefs(themeStore);
@@ -12,6 +15,18 @@ const { changeTheme } = themeStore;
 const showLoginModel = ref(false);
 
 const loginModalStep = ref(3)
+
+// 登录卡片显示计算属性
+const showLoginModelCard = computed(() => {
+    switch (loginModalStep.value) {
+        case 1:
+            return Login;
+        case 2:
+            return Register;
+        default:
+            return RegisterSuccess;
+    }
+})
 </script>
 
 <template>
@@ -46,9 +61,36 @@ const loginModalStep = ref(3)
     <!-- 登录窗口 -->
     <n-modal v-model:show="showLoginModel" transform-origin="center" :close-on-esc="false" :mask-closable="false">
         <div style="width: 400px">
-            <login v-if="loginModalStep === 1" />
-            <register v-else-if="loginModalStep === 2" />
-            <register-success v-else />
+            <!-- 使用Vue提供的Transition实现组件过渡动画，"out-in"表示先执行离开动画再执行进入动画 -->
+            <Transition name="bounce" mode="out-in">
+                <component :is="showLoginModelCard" />
+            </Transition>
         </div>
     </n-modal>
 </template>
+<style scoped>
+/* 过渡动画样式开始 */
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 过渡动画样式结束 */
+</style>
