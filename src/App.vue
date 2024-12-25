@@ -23,5 +23,7 @@ const { theme } = storeToRefs(themeStore);
         </n-layout-content>
       </n-layout>
     </n-layout>
+
+    <login-modal />
   </n-config-provider>
 </template>
