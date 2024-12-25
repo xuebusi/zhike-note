@@ -11,7 +11,7 @@ const { changeTheme } = themeStore;
 // 显示登录弹窗
 const showLoginModel = ref(false);
 
-const loginModalStep = ref(2)
+const loginModalStep = ref(3)
 </script>
 
 <template>
@@ -48,6 +48,7 @@ const loginModalStep = ref(2)
         <div style="width: 400px">
             <login v-if="loginModalStep === 1" />
             <register v-else-if="loginModalStep === 2" />
+            <register-success v-else />
         </div>
     </n-modal>
 </template>
