@@ -33,5 +33,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  server: {
+    proxy: {
+      '/note': {
+        target: 'http://localhost:18081/zhike-notes',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/note/, '')
+      }
+    }
+  },
 })
